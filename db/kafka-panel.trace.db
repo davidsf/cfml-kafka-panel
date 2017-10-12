@@ -1,0 +1,8 @@
+10-12 18:03:46 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "WORKERS_TYPES" no encontrada
+Table "WORKERS_TYPES" not found; SQL statement:
+select * from workers_types where id=2 [42102-172]
+10-12 18:03:55 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "WORKERS_TYPES" no encontrada
+Table "WORKERS_TYPES" not found; SQL statement:
+select * from workers_types [42102-172]

@@ -1,9 +1,11 @@
 <cfoutput>
+<div class="container">
+
   <div class="btn-toolbar" role="toolbar">
-    <a href="#event.buildLink('workersTypes.new')#" class="btn btn-default">New Type of Worker</a>
+    <a href="#event.buildLink('workersTypes.new')#" class="btn btn-default">New Type of Workers</a>
   </div>
 
-<div class="container">
+
   <table class="table">
     <thead>
       <tr>

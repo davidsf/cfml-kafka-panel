@@ -1,33 +1,58 @@
-# Advanced Script Template
+# CFML Kafka Panel
 
-An advanced template with all the bells and whistles in script format
+A coldbox application to create consumers groups and launch consumer to Kafka.
 
 ## License
 Apache License, Version 2.0.
 
-## Important Links
+## Other project
 
-Source Code
-- https://github.com/coldbox-templates/advanced-script
+You can see the kafka cfml plain example in:
+- https://github.com/davidsf/cfml-kafka
 
-## Quick Installation
+## Installation
 
-Each application templates contains a `box.json` so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) for its dependencies.  
-Just go into each template directory and type:
+### Kafka
 
-```
-box install
-```
+* Download, unzip and start Kafka.
 
-This will setup all the needed dependencies for each application template.  You can then type:
+  [Offical kafka download page](http://kafka.apache.org/downloads)
 
 ```
-box server start
+  cd <kafka-dir>
+  sudo ./bin/zookeeper-server-start.sh -daemon config/zookeeper.properties
+  sudo ./bin/kafka-server-start.sh -daemon config/server.properties
 ```
 
-And run the application.
+* Create our test topic, mytopic:
+```
+  sudo ./bin/kafka-topics.sh --create --topic mytopic --partitions 5 --replication-factor 1 --zookeeper localhost:2181
+```
+* start a console kafka client, so you can see the messages that we will send to it:
+```
+  ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic  mytopic --from-beginning
+```
 
----
+### Kafka Panel
+
+Clone this repo and start a server with commandbox:
+
+```
+box server  start
+```
+
+In the web page you can create workerTypes, ie, consumers groups and launch consumers of that consumer group.
+
+We have setup a worker and a workertype in the db, so you can test it without creating any code.
+
+## How to view in Kafka
+
+Send a json to the topic 'mytopic' kafka. You can do it in console with the kafka-console-producer tool shipped with kafka:
+
+```
+/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic mytopic
+>{ "name": "David" }
+```
+So, the worker in models/worker1.cfc, just write to the log if value of the name field in the json.
+
  
-###THE DAILY BREAD
- > "I am the way, and the truth, and the life; no one comes to the Father, but by me (JESUS)" Jn 14:1-12

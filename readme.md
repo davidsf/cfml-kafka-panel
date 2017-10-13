@@ -33,7 +33,7 @@ You can see the kafka cfml plain example in:
   ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic  mytopic --from-beginning
 ```
 
-### Kafka Panel
+### Kafka Web Panel
 
 Clone this repo and start a server with commandbox:
 
@@ -45,7 +45,7 @@ In the web page you can create workerTypes, ie, consumers groups and launch cons
 
 We have setup a worker and a workertype in the db, so you can test it without creating any code.
 
-## How to view in Kafka
+## How to send message to Kafka
 
 Send a json to the topic 'mytopic' kafka. You can do it in console with the kafka-console-producer tool shipped with kafka:
 
@@ -53,6 +53,10 @@ Send a json to the topic 'mytopic' kafka. You can do it in console with the kafk
 /bin/kafka-console-producer.sh --broker-list localhost:9092 --topic mytopic
 >{ "name": "David" }
 ```
-So, the worker in models/worker1.cfc, just write to the log if value of the name field in the json.
 
+## How to view the processed message
+
+So, the message is processed by the worker in models/worker1.cfc, this just write to the log if in the json message there are a name field. 
+
+In commandbox the server logs directory is: $HOME/.CommandBox/server/$serverid/lucee-$version/WEB-INF/lucee-web/logs/. You can see a worker_consumer_myfirstgroup.log and a worker1.log (when you send the first json message with name field).
  

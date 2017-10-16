@@ -21,13 +21,13 @@ component accessors="true" {
       for (var record in records.iterator()) {
         try {
           applyToRecord(record);
-          variables.consumer.commitSync();
           writelog(text="Event processed", file=logfile);
         } catch(any e) {
           writelog(text="Exception Type: #e.type# Detail: #e.detail# #e.message#", file=logfile);
           variables.app.workers[variables.name] = true;
         }
       }
+      variables.consumer.commitSync();
     }
     variables.consumer.close();
     writelog( file=logfile, text="Stopping worker:  #variables.name#" );

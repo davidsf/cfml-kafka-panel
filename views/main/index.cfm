@@ -46,7 +46,7 @@
                 <td>#worker.worker.thread_name#</td>
                 <td>#worker.status#</td>
                 <td>
-                  <cfif worker.status=="RUNNING">
+				  <cfif listFindNoCase( "RUNNING,RUNNABLE,WAITING,BLOCKED", worker.status )>
                     <a href="#event.buildLink('workers.stop.id.#worker.worker.id#')#" class="btn btn-default">Stop</a>
                   <cfelse>
                     <a href="#event.buildLink('workers.clear.id.#worker.worker.id#')#" class="btn btn-default">Clear</a>

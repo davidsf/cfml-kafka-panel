@@ -16,15 +16,22 @@ component singleton accessors="true" {
   function threads_cf()
   {
     var java_threads = threads_java();
-    var ret = [];
+	var ret = [];
+	var luceeVer = listFirst( server.lucee.version, "." );
 
     for (var jthread in java_threads)
     {
       if (jthread.getname() contains "cfthread")
       {
-        arrayappend(ret, jthread.getThreadScope());
+		  if( luceeVer < 5 ) {
+			  // worked in 4.5
+			arrayappend(ret, jthread.getThreadScope());
+		  }
+		  else if( luceeVer >= 5 ) {
+			arrayappend( ret, { name= jThread.getTagName(), status = jThread.getState().name() } );
+		  }
       }
-    }
+	}
     return ret;
   }
 
@@ -58,7 +65,7 @@ component singleton accessors="true" {
     var cf_threads = threads_cf();
     for (var mythread in cf_threads)
     {
-      if (mythread.name eq arguments.cfthread_name and mythread.status EQ "RUNNING")
+      if (mythread.name eq arguments.cfthread_name and listFindNoCase( "RUNNING,RUNNABLE,WAITING,BLOCKED", mythread.status ) )
       {
         return true;
       }
